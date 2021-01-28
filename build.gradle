@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'com.github.romahat'
+version '1.0-SNAPSHOT'
+
+application {
+    mainClassName = "com.github.romahat.App"
+    applicationDefaultJvmArgs = ["-XstartOnFirstThread"]
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    osgi_platform = 'cocoa.macosx.x86_64'
+    swt_version = '3.115.100'
+}
+
+configurations.all {
+    resolutionStrategy {
+        dependencySubstitution {
+            // The maven property ${osgi.platform} is not handled by Gradle
+            // so we replace the dependency, using the osgi platform from the project settings
+            substitute module('org.eclipse.platform:org.eclipse.swt.${osgi.platform}') with module("org.eclipse.platform:org.eclipse.swt.$osgi_platform:$swt_version")
+        }
+    }
+}
+
+dependencies {
+    compile "org.eclipse.platform:org.eclipse.jface:3.17.0"
+    compile "org.eclipse.platform:org.eclipse.swt:$swt_version"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

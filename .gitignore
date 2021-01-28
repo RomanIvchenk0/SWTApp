@@ -1,0 +1,14 @@
+/bin
+/build
+/gradle
+/.gradle
+/.settings
+.settings/
+.classpath
+.project
+*~
+private.groovy
+.idea/
+*.iml
+out/
+.DS_Store
